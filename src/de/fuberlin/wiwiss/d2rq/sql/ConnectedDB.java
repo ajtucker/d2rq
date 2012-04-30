@@ -56,6 +56,16 @@ public class ConnectedDB {
 	private static final String[] POSTGRESQL_IGNORED_SCHEMAS = {"information_schema", "pg_catalog"};
 	private static final String[] ORACLE_IGNORED_SCHEMAS = {"CTXSYS", "EXFSYS", "FLOWS_030000", "MDSYS", "OLAPSYS", "ORDSYS", "SYS", "SYSTEM", "WKSYS", "WK_TEST", "WMSYS", "XDB"};
     private static final List<String> MSSQL_IGNORED_SCHEMAS = Arrays.asList(new String[]{"sys", "INFORMATION_SCHEMA"});
+    
+  /*
+   *  Java 6.0 / JDBC 4.0 backported types
+   */
+  private final static int J16_ROWID = -8;
+  private static final int J16_NCHAR = -15;
+  private static final int J16_NVARCHAR = -9;
+  private static final int J16_LONGNVARCHAR = -16;
+  private static final int J16_NCLOB = 2011;
+  private static final int J16_SQLXML = 2009; 
 	
 	private String jdbcURL;
 	private String username;
@@ -395,6 +405,10 @@ public class ConnectedDB {
 			case Types.VARCHAR:
 			case Types.LONGVARCHAR:
 			case Types.CLOB:
+			case J16_NCHAR:
+			case J16_NVARCHAR:
+			case J16_LONGNVARCHAR:
+			case J16_NCLOB:
 				return SQLDataType.CHARACTER;
 			
 			case Types.NUMERIC:
@@ -440,11 +454,6 @@ public class ConnectedDB {
 			case Types.NULL:
 			case Types.REF:
 			case Types.STRUCT:
-		}
-		if ("NCHAR".equals(type.typeName()) || "NVARCHAR".equals(type.typeName()) ||
-				"NCLOB".equals(type.typeName())) {
-			// These are in java.sql.Types as of Java 6 but not yet in Java 1.5
-			return SQLDataType.CHARACTER;
 		}
 		if ("VARCHAR2".equals(type.typeName()) || "NVARCHAR2".equals(type.typeName())) {
 			// Oracle-specific types
