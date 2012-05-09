@@ -35,7 +35,7 @@ public abstract class LoadDataTest extends TestCase
 	private static boolean loadHsqlData = true;
 	private static boolean loadSDBData = true;
 	// directories and data-files and config-files
-	protected static final String CURR_DIR = "test/de/fuberlin/wiwiss/d2rq/d2rq_sdb";
+	protected static final String CURR_DIR = "src/test/java/de/fuberlin/wiwiss/d2rq/d2rq_sdb";
 	private static final String DATA_DIR = "dataset";
 	private static final String CONFIG_DIR = "config";
 	private static final String FILENAME_TTL_DATA = "dataset.ttl.zip";
